@@ -14,7 +14,7 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: '21'
       - run: |
           npm install @capacitor/core @capacitor/cli @capacitor/android @capacitor/assets --save-dev
           npx cap add android
