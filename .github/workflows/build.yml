@@ -1,0 +1,31 @@
+name: Build Android APK
+on:
+  push:
+    branches: [ main ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - run: npm install && npm run build
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - run: |
+          npm install @capacitor/core @capacitor/cli @capacitor/android @capacitor/assets --save-dev
+          npx cap add android
+          npx capacitor-assets generate --android
+          npx cap sync android
+      - run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug
+      - uses: actions/upload-artifact@v3
+        with:
+          name: umbra-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          
