@@ -291,11 +291,11 @@ function buildFactory(): LevelData {
   L.sparks.push({ x: 1700, y: G - 180, w: 26, h: 180, period: 1.8, phase: 1.35 });
   L.whispers.push({ x: 1150, text: "Between the sparks, a heartbeat. Move inside it." });
   // magnet yank across a pit
-  x = fP(L, x, 360);
-  L.magnets.push({ x: x - 180, y: G - 240, r: 210, strength: 540 });
-  L.whispers.push({ x: x - 380, text: "Let the iron carry you. Only for a moment." });
-  x = fG(L, x, 1000);
-  cp(L, 2420);
+x = fP(L, x, 360);
+L.magnets.push({ x: x - 180, y: G - 160, r: 260, strength: 620 });
+L.whispers.push({ x: x - 380, text: "Let the iron carry you. Only for a moment." });
+x = fG(L, x, 1000);
+cp(L, 2420);
   // repel magnet beside a blade (do not linger)
   L.magnets.push({ x: 2700, y: G - 40, r: 170, strength: -300 });
   L.saws.push({ cx: 2820, cy: G - 90, r: 38, axis: "y", range: 70, speed: 2.4, phase: 0.6, angle: 0 });
