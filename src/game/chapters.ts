@@ -301,10 +301,10 @@ function buildFactory(): LevelData {
   L.saws.push({ cx: 2820, cy: G - 90, r: 38, axis: "y", range: 70, speed: 2.4, phase: 0.6, angle: 0 });
   L.whispers.push({ x: 2580, text: "The second magnet does not love you. Do not linger." });
   // timed gate with an immediate blade after it
-  L.levers.push({ x: 2950, y: G, id: 41, on: false, timed: 3.0 });
+    L.levers.push({ x: 2950, y: G, id: 41, on: false });
   const g41 = G - 220;
   L.doors.push({ x: 3080, y: g41, w: 30, h: 220, open: false, link: 41, yClosed: g41, yOpen: g41 - 220 });
-  L.saws.push({ cx: 3170, cy: G - 90, r: 36, axis: "y", range: 70, speed: 2.6, phase: 0, angle: 0 });
+  L.saws.push({ cx: 3170, cy: G - 90, r: 36, axis: "y", range: 70, speed: 2.6, phase: 0, angle: 0, link: 41 });
   L.whispers.push({ x: 2900, text: "Pull, then run. The gate forgets in three heartbeats." });
   cp(L, 3300);
   // conveyor timing gauntlet (no switch — the floor itself is the enemy)
