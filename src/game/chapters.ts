@@ -271,51 +271,80 @@ function buildRuins(): LevelData {
   return L;
 }
 
-// ================= CHAPTER III — THE IRON CATHEDRAL =================
-function buildFactory(): LevelData {
-  const L = base(3, "factory", 4400, { x: 4200, y: G - 160, w: 70, h: 130 });
+// ================= CHAPTER III — THE IRON CATHEDRAL ===function buildFactory(): LevelData {
+  const L = base(3, "factory", 5000, { x: 4800, y: G - 160, w: 70, h: 130 });
   let x = 0;
-  x = fG(L, x, 560);
-  // kill-the-belt then time-the-blade
+  x = fG(L, x, 500);
+
+  // --- Section 1: kill-the-belt then time-the-blade ---
   L.levers.push({ x: 120, y: G, id: 40, on: false });
   L.conveyors.push({ x: 220, y: G - 12, w: 300, h: 12, dir: 1, on: true, link: 40, phase: 0 });
   L.saws.push({ cx: 540, cy: G - 90, r: 40, axis: "y", range: 70, speed: 2.2, phase: 0, angle: 0 });
   L.whispers.push({ x: 60, text: "The belt is a liar. Kill it, then watch the blade breathe." });
   x = fG(L, x, 560);
   cp(L, 600);
-  // spark rhythm corridor
-  x = fG(L, x, 900);
-  L.sparks.push({ x: 1250, y: G - 180, w: 26, h: 180, period: 1.8, phase: 0 });
-  L.sparks.push({ x: 1400, y: G - 180, w: 26, h: 180, period: 1.8, phase: 0.45 });
-  L.sparks.push({ x: 1550, y: G - 180, w: 26, h: 180, period: 1.8, phase: 0.9 });
-  L.sparks.push({ x: 1700, y: G - 180, w: 26, h: 180, period: 1.8, phase: 1.35 });
-  L.whispers.push({ x: 1150, text: "Between the sparks, a heartbeat. Move inside it." });
-  // magnet yank across a pit
-x = fP(L, x, 360);
-L.magnets.push({ x: x - 180, y: G - 100, r: 300, strength: 700 });
-L.whispers.push({ x: x - 380, text: "Let the iron carry you. Only for a moment." });
-x = fG(L, x, 1000);
-cp(L, 2420);
-  // repel magnet beside a blade (do not linger)
-  L.magnets.push({ x: 2700, y: G - 40, r: 170, strength: -300 });
-  L.saws.push({ cx: 2820, cy: G - 90, r: 38, axis: "y", range: 70, speed: 2.4, phase: 0.6, angle: 0 });
-  L.whispers.push({ x: 2580, text: "The second magnet does not love you. Do not linger." });
-  // timed gate with an immediate blade after it
-    L.levers.push({ x: 2950, y: G, id: 41, on: false });
+
+  // --- Section 2: spark rhythm corridor (tighter timing) ---
+  x = fG(L, x, 700);
+  L.sparks.push({ x: 1150, y: G - 180, w: 26, h: 180, period: 1.6, phase: 0 });
+  L.sparks.push({ x: 1290, y: G - 180, w: 26, h: 180, period: 1.6, phase: 0.4 });
+  L.sparks.push({ x: 1430, y: G - 180, w: 26, h: 180, period: 1.6, phase: 0.8 });
+  L.sparks.push({ x: 1570, y: G - 180, w: 26, h: 180, period: 1.6, phase: 1.2 });
+  L.sparks.push({ x: 1710, y: G - 180, w: 26, h: 180, period: 1.6, phase: 0.2 });
+  L.whispers.push({ x: 1050, text: "Between the sparks, a heartbeat. Move inside it." });
+  x = fG(L, x, 800);
+  cp(L, 1900);
+
+  // --- Section 3: magnet pit crossing (SAFE tuned values) ---
+  x = fP(L, x, 340);
+  L.magnets.push({ x: x - 170, y: G - 100, r: 300, strength: 700 });
+  L.whispers.push({ x: x - 360, text: "Let the iron carry you. Only for a moment." });
+  x = fG(L, x, 400);
+
+  // immediate saw right after landing — punishes lingering
+  L.saws.push({ cx: x + 60, cy: G - 90, r: 38, axis: "y", range: 70, speed: 2.5, phase: 0.5, angle: 0 });
+  x = fG(L, x, 500);
+  cp(L, 2700);
+
+  // --- Section 4: repel magnet beside a blade (do not linger) ---
+  L.magnets.push({ x: x + 100, y: G - 40, r: 170, strength: -320 });
+  L.saws.push({ cx: x + 220, cy: G - 90, r: 38, axis: "y", range: 70, speed: 2.6, phase: 0.6, angle: 0 });
+  L.whispers.push({ x: x - 80, text: "The second magnet does not love you. Do not linger." });
+  x = fG(L, x, 500);
+
+  // --- Section 5: timed gate with an immediate blade after it ---
+  L.levers.push({ x: x, y: G, id: 41, on: false });
   const g41 = G - 220;
-  L.doors.push({ x: 3080, y: g41, w: 30, h: 220, open: false, link: 41, yClosed: g41, yOpen: g41 - 220 });
-  L.saws.push({ cx: 3170, cy: G - 90, r: 36, axis: "y", range: 70, speed: 2.6, phase: 0, angle: 0, link: 41 });
-  L.whispers.push({ x: 2900, text: "Pull, then run. The gate forgets in three heartbeats." });
-  cp(L, 3300);
-  // conveyor timing gauntlet (no switch — the floor itself is the enemy)
-  x = fG(L, x, 900);
-  L.conveyors.push({ x: 3380, y: G - 12, w: 380, h: 12, dir: 1, on: true, phase: 0 });
-  L.saws.push({ cx: 3500, cy: G - 90, r: 36, axis: "y", range: 70, speed: 2.6, phase: 0.3, angle: 0 });
-  L.saws.push({ cx: 3660, cy: G - 90, r: 36, axis: "y", range: 70, speed: 2.6, phase: 1.3, angle: 0 });
-  L.whispers.push({ x: 3360, text: "The floor moves. Time becomes a weapon." });
-  cp(L, 3800);
+  L.doors.push({ x: x + 130, y: g41, w: 30, h: 220, open: false, link: 41, yClosed: g41, yOpen: g41 - 220 });
+  L.saws.push({ cx: x + 220, cy: G - 90, r: 36, axis: "y", range: 70, speed: 2.8, phase: 0, angle: 0, link: 41 });
+  L.whispers.push({ x: x - 50, text: "Pull, then run. The gate forgets in three heartbeats." });
+  x = fG(L, x, 500);
+  cp(L, 3500);
+
+  // --- Section 6: conveyor timing gauntlet (no switch — the floor itself is the enemy) ---
+  x = fG(L, x, 300);
+  L.conveyors.push({ x: x, y: G - 12, w: 400, h: 12, dir: 1, on: true, phase: 0 });
+  L.saws.push({ cx: x + 130, cy: G - 90, r: 36, axis: "y", range: 70, speed: 2.7, phase: 0.3, angle: 0 });
+  L.saws.push({ cx: x + 290, cy: G - 90, r: 36, axis: "y", range: 70, speed: 2.7, phase: 1.3, angle: 0 });
+  L.whispers.push({ x: x - 20, text: "The floor moves. Time becomes a weapon." });
+  x = fG(L, x, 500);
+
+  // --- Section 7: NEW final gauntlet — double spark gate + repel magnet pit combo ---
+  L.sparks.push({ x: x + 100, y: G - 180, w: 26, h: 180, period: 1.4, phase: 0 });
+  L.sparks.push({ x: x + 230, y: G - 180, w: 26, h: 180, period: 1.4, phase: 0.7 });
+  L.whispers.push({ x: x - 20, text: "Two hearts beating out of time. Find the gap." });
+  x = fG(L, x, 400);
+
+  x = fP(L, x, 300);
+  L.magnets.push({ x: x - 150, y: G - 90, r: 280, strength: 650 });
+  L.saws.push({ cx: x + 60, cy: G - 90, r: 34, axis: "y", range: 60, speed: 3.0, phase: 0, angle: 0 });
+  L.whispers.push({ x: x - 320, text: "The last pull is the hardest. Do not doubt it." });
+  x = fG(L, x, 700);
+
+  cp(L, 4700);
   return L;
-}
+}==============
+
 
 // ================= CHAPTER IV — THE GRAVITY VOID =================
 function buildVoid(): LevelData {
