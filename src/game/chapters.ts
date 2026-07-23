@@ -292,7 +292,7 @@ function buildFactory(): LevelData {
   L.whispers.push({ x: 1150, text: "Between the sparks, a heartbeat. Move inside it." });
   // magnet yank across a pit
 x = fP(L, x, 360);
-L.magnets.push({ x: x - 180, y: G - 160, r: 260, strength: 620 });
+L.magnets.push({ x: x - 180, y: G - 100, r: 300, strength: 700 });
 L.whispers.push({ x: x - 380, text: "Let the iron carry you. Only for a moment." });
 x = fG(L, x, 1000);
 cp(L, 2420);
